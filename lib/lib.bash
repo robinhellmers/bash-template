@@ -46,7 +46,7 @@ func_lib()
 
     _validate_input_func_lib
 
-    echo "You input the number: $num"
+    echo -e "\nFunction input number: $num"
 }
 
 _validate_input_func_lib()

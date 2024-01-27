@@ -29,6 +29,7 @@ library_sourcing()
 
     ### Source libraries ###
     source "$LIB_PATH/lib_core.bash"
+    source "$LIB_PATH/lib_handle_input.bash"
     source "$LIB_PATH/lib.bash"
 }
 
@@ -41,24 +42,88 @@ tmp_find_script_path() {
 
 library_sourcing
 
+########################
+### GLOBAL CONSTANTS ###
+########################
+
+# readonly <var>
+
+############
+### MAIN ###
+############
+
 ############
 ### MAIN ###
 ############
 
 main()
 {
+    _handle_args_main "$@"
+
     local this_file="$(find_path 'this_file' "${#BASH_SOURCE[@]}" "${BASH_SOURCE[@]}")"
-    echo -e "\nthis_file: $this_file\n"
+
+    [[ "$verbose" == 'true' ]] &&
+        echo -e "\nthis_file: $this_file"
 
     func_lib 123
-
-    # Expected invalid usage error
-    func_lib abc
 }
 
 ###################
 ### END OF MAIN ###
 ###################
+
+register_help_text 'script name' \
+'<script name> [arg1]
+
+<description>
+
+[arg1] (Optional): The content of arg1'
+
+register_function_flags 'script name' \
+                        '-v' '--verbose' 'false' \
+                        'Verbose output.' \
+                        '-e' '--echo' 'true' \
+                        'Echo string given after flag.'
+
+_handle_args_main()
+{
+    _handle_args 'script name' "$@"
+
+    ###
+    # Non-flagged arguments
+    if (( ${#non_flagged_args[@]} != 0 ))
+    then
+        # Optional argument 1
+        main_input_dir=${non_flagged_args[0]}
+        if ! [[ -d "$main_input_dir" ]]
+        then
+            define error_info << END_OF_ERROR_INFO
+Given [ DIR ] is not a directory: '$main_input_dir'
+END_OF_ERROR_INFO
+            invalid_function_usage 2 'script name' "$error_info"
+            exit 1
+        fi
+    fi
+    ###
+
+    ###
+    # -e, --echo
+    if [[ "$echo_flag" == 'true' ]]
+    then
+        echo
+        echo "$echo_flag_value"
+    fi
+    ###
+
+    ###
+    # -v --verbose
+    if [[ "$verbose_flag" == 'true' ]]
+    then
+        verbose='true'
+    fi
+    ###
+
+}
 
 main_stderr_red()
 {
