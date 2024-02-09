@@ -29,8 +29,8 @@ library_sourcing()
 
     ### Source libraries ###
     source "$LIB_PATH/lib_core.bash"
-    source "$LIB_PATH/lib_handle_input.bash"
-    source "$LIB_PATH/lib.bash"
+    source_lib "$LIB_PATH/lib_handle_input.bash"
+    source_lib "$LIB_PATH/lib.bash"
 }
 
 # Minimal version of find_path(). Should only be used within this script to source library defining find_path().
