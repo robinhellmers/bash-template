@@ -40,6 +40,10 @@ init_lib
 ### Library start ###
 #####################
 
+register_help_text 'func_lib' \
+"Usage: func_lib <num>
+    <num>: A number to output to stdout"
+
 func_lib()
 {
     local num=$1
@@ -62,7 +66,7 @@ END_OF_FUNCTION_USAGE
 define error_info <<END_OF_ERROR_INFO
 Invalid input <num>, not a number: '$num'
 END_OF_ERROR_INFO
-            invalid_function_usage 0 "$function_usage" "$error_info"
+            invalid_function_usage 2 'func_lib' "$error_info"
             exit 1
             ;;
         *)  ;;
