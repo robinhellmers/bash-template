@@ -36,7 +36,7 @@ library_sourcing()
 # Minimal version of find_path(). Should only be used within this script to source library defining find_path().
 tmp_find_script_path() {
     unset -f tmp_find_script_path; local s="${BASH_SOURCE[0]}"; local d
-    while [ -L "$s" ]; do d=$(cd -P "$(dirname "$s")" &>/dev/null && pwd); s=$(readlink "$s"); [[ $s != /* ]] && s=$d/$s; done
+    while [[ -L "$s" ]]; do d=$(cd -P "$(dirname "$s")" &>/dev/null && pwd); s=$(readlink "$s"); [[ $s != /* ]] && s=$d/$s; done
     echo "$(cd -P "$(dirname "$s")" &>/dev/null && pwd)"
 }
 
