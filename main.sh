@@ -29,7 +29,6 @@ library_sourcing()
 
     ### Source libraries ###
     source "$LIB_PATH/lib_core.bash" || exit 1
-    source_lib "$LIB_PATH/lib_handle_input.bash"
     source_lib "$LIB_PATH/lib.bash"
 }
 
