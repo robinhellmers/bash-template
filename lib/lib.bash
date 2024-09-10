@@ -40,9 +40,12 @@ init_lib
 ### Library start ###
 #####################
 
-register_help_text 'func_lib' \
-"Usage: func_lib <num>
-    <num>: A number to output to stdout"
+register_function_flags 'func_lib'
+
+register_help_text 'func_lib' <<-END_OF_HELP_TEXT
+Usage: func_lib <num>
+    <num>: A number to output to stdout
+END_OF_HELP_TEXT
 
 func_lib()
 {

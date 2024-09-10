@@ -29,7 +29,6 @@ library_sourcing()
 
     ### Source libraries ###
     source "$LIB_PATH/lib_core.bash" || exit 1
-    source_lib "$LIB_PATH/lib_handle_input.bash"
     source_lib "$LIB_PATH/lib.bash"
 }
 
@@ -72,8 +71,10 @@ main()
 ### END OF MAIN ###
 ###################
 
-register_help_text 'script name' \
-'<script name> [arg1]
+register_function_flags 'script name'
+
+register_help_text 'script name' <<-END_OF_HELP_TEXT
+<script name> [arg1]
 
 <description>
 
@@ -84,6 +85,7 @@ register_function_flags 'script name' \
                         'Verbose output.' \
                         '-e' '--echo' 'true' \
                         'Echo string given after flag.'
+END_OF_HELP_TEXT
 
 _handle_args_main()
 {
