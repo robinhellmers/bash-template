@@ -76,14 +76,14 @@ copy_git_submodules()
 copy_files()
 {
     # Create rsync exclude parameters from ignore_files array
-    local rsync_exclude=""
+    local -a rsync_exclude=()
     for file in "${ignore_files[@]}"
     do
-        rsync_exclude+="--exclude=$(basename "$file") "
+        rsync_exclude+=("--exclude=$(basename "$file")")
     done
 
     # Perform the copy using rsync
-    eval rsync -av $rsync_exclude "$THIS_REPO_PATH/" "$DEST_PATH" >/dev/null
+    rsync -av "${rsync_exclude[@]}" "$THIS_REPO_PATH/" "$DEST_PATH" >/dev/null
 }
 
 tmp_find_script_path() {
